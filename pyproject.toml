@@ -1,0 +1,31 @@
+[project]
+name = "mcp-noob-toolkit"
+version = "0.1.0"
+description = "Toolkit for building Model Context Protocol (MCP) tools"
+readme = "README.md"
+requires-python = ">=3.11.11"
+dependencies = []
+authors = [
+    {name = "Prashant", email = "prashantmalge181@gmail.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+"Homepage" = "https://github.com/SuyodhanJ6/mcp-noob-toolkit"
+"Bug Tracker" = "https://github.com/SuyodhanJ6/mcp-noob-toolkit/issues"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
