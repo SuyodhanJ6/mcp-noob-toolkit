@@ -91,6 +91,63 @@ The client will:
 3. Analyze the user story
 4. Provide quality score and recommendations
 
+## Video MCP Tool
+
+The Video MCP Tool provides video transcription and summarization services using the Model Context Protocol and OpenAI's Whisper model.
+
+### Components
+
+- **Server**: Provides MCP-compliant API for video transcription and summarization
+- **Client**: Uses a natural language interface for processing video requests
+
+### Features
+
+- Transcribe videos using OpenAI's Whisper model
+- Summarize video transcripts using GPT models
+- Summarize videos from URLs (mock implementation for demonstration)
+- Natural language interface for easy use
+
+### Running the Video MCP Server
+
+Start the server to expose video processing capabilities through MCP:
+
+```bash
+python -m video_mcp_tool.video_mcp_server --host 127.0.0.1 --port 3004
+```
+
+The server will check for the required OpenAI API key and listen for MCP requests on the specified host and port.
+
+### Using the Agent Client
+
+In a separate terminal, run the agent client with your request in natural language:
+
+```bash
+python -m video_mcp_tool.agent_client "YOUR REQUEST HERE"
+```
+
+Examples:
+
+```bash
+# Transcribe a local video file
+python -m video_mcp_tool.agent_client "Transcribe the video at /path/to/video.mp4"
+
+# Summarize a local video file
+python -m video_mcp_tool.agent_client "Summarize the content of the video at /path/to/video.mp4"
+
+# Summarize a video from a URL
+python -m video_mcp_tool.agent_client "Summarize the video at https://example.com/video"
+```
+
+Optional parameters:
+- `--language`: Language code (e.g., "en", "fr", "es")
+- `--length`: Summary length - "short", "medium", or "long"
+- `--model`: LLM model to use (default: "gpt-4o-mini")
+
+Example with parameters:
+```bash
+python -m video_mcp_tool.agent_client "Summarize the video at https://example.com/video" --language fr --length short --model gpt-4
+```
+
 ## Extending the Toolkit
 
 You can extend this toolkit by:
@@ -102,3 +159,6 @@ You can extend this toolkit by:
 ## License
 
 MIT
+
+
+
