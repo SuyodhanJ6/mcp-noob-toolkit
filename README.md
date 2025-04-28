@@ -1,7 +1,8 @@
 # MCP Noob Toolkit 🧰
 
 <div align="center">
-  
+
+[![Version](https://img.shields.io/badge/Version-v0.1.0-brightgreen)](https://github.com/SuyodhanJ6/mcp-noob-toolkit/releases/tag/v0.1.0)
 ![MCP Toolkit](https://img.shields.io/badge/MCP-Toolkit-blue)
 ![Python](https://img.shields.io/badge/Python-3.11+-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
