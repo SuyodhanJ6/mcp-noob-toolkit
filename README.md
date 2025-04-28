@@ -189,6 +189,58 @@ The Gmail MCP Tool provides comprehensive integration with Gmail services throug
 - **History Tracking**: Monitor changes to the mailbox over time
 - **Authentication**: Handle OAuth authentication with Gmail
 
+### Setting up Google API Credentials
+
+Before using the Gmail MCP Tool, you need to set up the necessary credentials:
+
+<div align="center">
+  
+#### 🔐 Creating your credentials.json file
+
+</div>
+
+1. **Create a Google Cloud Project**:
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/)
+   - Click "Select a project" at the top and then "New Project"
+   - Name your project (e.g., "MCP Gmail Tool") and click "Create"
+
+2. **Enable the Gmail API**:
+   - In your project dashboard, go to "APIs & Services" > "Library"
+   - Search for "Gmail API" and select it
+   - Click "Enable"
+
+3. **Configure OAuth Consent Screen**:
+   - Go to "APIs & Services" > "OAuth consent screen"
+   - Choose "External" user type (or "Internal" if you're in an organization)
+   - Fill in required fields (App name, User support email, Developer contact info)
+   - Add scopes: `https://www.googleapis.com/auth/gmail.modify` and `https://www.googleapis.com/auth/gmail.settings.basic`
+   - Add your email as a test user
+   - Click "Save and Continue" through all steps
+
+4. **Create OAuth Credentials**:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" and select "OAuth client ID"
+   - Select "Desktop application" as the application type
+   - Name your client (e.g., "Gmail MCP Client")
+   - Click "Create"
+
+5. **Download the Credentials**:
+   - A dialog will show your client ID and secret
+   - Click the download button (⬇️) to download your `credentials.json` file
+
+6. **Place the Credentials File**:
+   - Save the downloaded file as `credentials.json` in the `gmail_mcp_tool` directory
+   - **IMPORTANT**: This file contains sensitive information - never commit it to version control
+   - Ensure it's listed in your `.gitignore` file
+
+<div align="center">
+  
+![Google Cloud Setup](https://img.shields.io/badge/Google_Cloud-Setup_Required-red)
+
+</div>
+
+The first time you run the Gmail MCP tool, it will use this credentials file to authenticate and generate a `token.json` file for future access.
+
 ### Running the Gmail MCP Server
 
 Start the server to expose Gmail functionality through MCP:
