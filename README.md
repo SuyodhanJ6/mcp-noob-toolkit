@@ -18,6 +18,8 @@ Simple toolkit for building and using Model Context Protocol (MCP) tools.
 | 🔄 **Jira MCP** | Retrieve and analyze Jira issues | Available |
 | 🎬 **Video MCP** | Video transcription and summarization | Available |
 | ✉️ **Gmail MCP** | Gmail integration capabilities | Available |
+| 📁 **Google Drive MCP** | Google Drive document management | Available |
+| 🎭 **Playwright MCP** | Browser automation and web interactions | Available |
 
 ## 📖 About
 
@@ -286,6 +288,208 @@ Optional parameters:
 Example with parameters:
 ```bash
 python -m gmail_mcp_tool.agent_client "Show me my latest emails" --max_results 20 --model gpt-4
+```
+
+## 📁 Google Drive MCP Tool
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Drive_icon_%282020%29.svg/2295px-Google_Drive_icon_%282020%29.svg.png" alt="Google Drive Logo" width="30" height="30" align="left" style="margin-right: 10px"/>
+
+The Google Drive MCP Tool provides comprehensive integration with Google Drive services through the Model Context Protocol, allowing AI agents to manage files, documents, spreadsheets, presentations, and more.
+
+### Components
+
+- **Server**: Provides MCP-compliant API for Google Drive operations
+- **Client**: Uses React Agent pattern to process natural language queries about document management
+
+### Features
+
+- **File Management**: List, search, upload, download, move, and delete files
+- **Document Creation**: Create Google Docs, Sheets, Slides, and folders
+- **Document Editing**: Edit content in Google Docs, Sheets, and Slides
+- **Collaboration**: Share files with other users and set permissions
+- **Authentication**: Handle OAuth authentication with Google Drive
+
+### Setting up Google API Credentials
+
+Before using the Google Drive MCP Tool, you need to set up the necessary credentials:
+
+<div align="center">
+  
+#### 🔐 Creating your credentials.json file
+
+</div>
+
+1. **Create a Google Cloud Project**:
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/)
+   - Click "Select a project" at the top and then "New Project"
+   - Name your project (e.g., "MCP Drive Tool") and click "Create"
+
+2. **Enable the Google Drive API**:
+   - In your project dashboard, go to "APIs & Services" > "Library"
+   - Search for "Google Drive API" and select it
+   - Click "Enable"
+   - Also enable "Google Docs API", "Google Sheets API", and "Google Slides API" for full functionality
+
+3. **Configure OAuth Consent Screen**:
+   - Go to "APIs & Services" > "OAuth consent screen"
+   - Choose "External" user type (or "Internal" if you're in an organization)
+   - Fill in required fields (App name, User support email, Developer contact info)
+   - Add scopes for Drive, Docs, Sheets, and Slides
+   - Add your email as a test user
+   - Click "Save and Continue" through all steps
+
+4. **Create OAuth Credentials**:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" and select "OAuth client ID"
+   - Select "Desktop application" as the application type
+   - Name your client (e.g., "Drive MCP Client")
+   - Click "Create"
+
+5. **Download the Credentials**:
+   - A dialog will show your client ID and secret
+   - Click the download button (⬇️) to download your `credentials.json` file
+
+6. **Place the Credentials File**:
+   - Save the downloaded file as `credentials.json` in the `google_drive_mcp_tool` directory
+   - **IMPORTANT**: This file contains sensitive information - never commit it to version control
+   - Ensure it's listed in your `.gitignore` file
+
+<div align="center">
+  
+![Google Cloud Setup](https://img.shields.io/badge/Google_Cloud-Setup_Required-red)
+
+</div>
+
+The first time you run the Google Drive MCP tool, it will use this credentials file to authenticate and generate a `token.json` file for future access.
+
+### Running the Google Drive MCP Server
+
+Start the server to expose Google Drive functionality through MCP:
+
+```bash
+python -m google_drive_mcp_tool.google_drive_mcp_tool --host 127.0.0.1 --port 3006
+```
+
+The server will check for the required credentials and listen for MCP requests on the specified host and port.
+
+### Using the Agent Client
+
+In a separate terminal, run the agent client with your document management request:
+
+```bash
+python -m google_drive_mcp_tool.agent_client "YOUR REQUEST HERE"
+```
+
+Examples:
+
+```bash
+# List files
+python -m google_drive_mcp_tool.agent_client "Show me my recent files"
+
+# Create documents
+python -m google_drive_mcp_tool.agent_client "Create a new document called 'Meeting Notes'"
+
+# Upload files
+python -m google_drive_mcp_tool.agent_client "Upload budget.xlsx to my drive"
+
+# Share files
+python -m google_drive_mcp_tool.agent_client "Share my presentation with john@example.com"
+
+# Create folders
+python -m google_drive_mcp_tool.agent_client "Create a new folder for project documents"
+
+# Download files
+python -m google_drive_mcp_tool.agent_client "Download my quarterly report PDF"
+
+# Search for files
+python -m google_drive_mcp_tool.agent_client "Search for files containing 'project plan'"
+```
+
+Optional parameters:
+- `--model`: LLM model to use (default: "gpt-4o-mini")
+- `--interactive`: Run in interactive mode
+
+Interactive mode:
+```bash
+python -m google_drive_mcp_tool.agent_client --interactive
+```
+
+## 🎭 Playwright MCP Tool
+
+<img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="30" height="30" align="left" style="margin-right: 10px"/>
+
+The Playwright MCP Tool provides browser automation capabilities through the Model Context Protocol, allowing AI agents to interact with web pages, extract data, and perform complex web automation tasks.
+
+### Components
+
+- **Server**: Provides MCP-compliant API for Playwright browser automation
+- **Client**: Uses React Agent pattern to process natural language queries for web automation
+
+### Features
+
+- **Browser Control**: Launch, navigate, and close browsers (Chromium, Firefox, WebKit)
+- **Page Interaction**: Click elements, fill forms, select options, check boxes, press keys
+- **Page Analysis**: Get text, attributes, count elements, check visibility, wait for selectors
+- **Data Extraction**: Extract tables, get page title, URL, and content
+- **Advanced Interactions**: Hover, drag and drop, upload files, execute JavaScript
+
+### Prerequisites
+
+You need to set up the Playwright MCP server before using the tool:
+
+```bash
+# Clone the Playwright MCP repository
+git clone https://github.com/microsoft/playwright-mcp.git
+
+# Navigate to the repository
+cd playwright-mcp/
+
+# Run the Playwright MCP server in Docker
+docker run -i --rm --init -p 8931:8931 mcp/playwright
+```
+
+The server will be available at http://localhost:8931.
+
+### Running the Playwright MCP Client
+
+In a separate terminal, run the agent client with your web automation request:
+
+```bash
+python -m playwright_mcp_tool.agent_client "YOUR REQUEST HERE"
+```
+
+Examples:
+
+```bash
+# Basic browser operations
+python -m playwright_mcp_tool.agent_client "Open Chrome and go to github.com"
+python -m playwright_mcp_tool.agent_client "Take a screenshot of the current page"
+
+# Form interactions
+python -m playwright_mcp_tool.agent_client "Go to example.com and fill the search box with 'automation'"
+python -m playwright_mcp_tool.agent_client "Click the Submit button"
+
+# Data extraction
+python -m playwright_mcp_tool.agent_client "Extract data from the products table on the page"
+python -m playwright_mcp_tool.agent_client "Get the text of the main heading"
+
+# Complex automation
+python -m playwright_mcp_tool.agent_client "Log into my GitHub account with username 'user' and password 'pass'"
+python -m playwright_mcp_tool.agent_client "Navigate to twitter.com, search for 'AI news', and extract the first 5 results"
+```
+
+You can run the client in interactive mode:
+
+```bash
+python -m playwright_mcp_tool.agent_client -i
+```
+
+Optional parameters:
+- `--model`: LLM model to use (default: "gpt-4o-mini")
+
+Example with parameters:
+```bash
+python -m playwright_mcp_tool.agent_client "Automate login to my account" --model gpt-4
 ```
 
 ## 🛠️ Extending the Toolkit
