@@ -19,6 +19,7 @@ Simple toolkit for building and using Model Context Protocol (MCP) tools.
 | 🎬 **Video MCP** | Video transcription and summarization | Available |
 | ✉️ **Gmail MCP** | Gmail integration capabilities | Available |
 | 📁 **Google Drive MCP** | Google Drive document management | Available |
+| 📅 **Google Calendar MCP** | Google Calendar event management | Available |
 | 🎭 **Playwright MCP** | Browser automation and web interactions | Available |
 
 ## 📖 About
@@ -412,6 +413,147 @@ Optional parameters:
 Interactive mode:
 ```bash
 python -m google_drive_mcp_tool.agent_client --interactive
+```
+
+## 📅 Google Calendar MCP Tool
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Calendar_icon_%282020%29.svg/2048px-Google_Calendar_icon_%282020%29.svg.png" alt="Google Calendar Logo" width="30" height="30" align="left" style="margin-right: 10px"/>
+
+The Google Calendar MCP Tool provides comprehensive integration with Google Calendar services through the Model Context Protocol, allowing AI agents to manage events, calendars, appointments, and scheduling with natural language commands.
+
+### Components
+
+- **Server**: Provides MCP-compliant API for Google Calendar operations
+- **Client**: Uses React Agent pattern to process natural language queries about calendar management
+
+### Features
+
+- **Calendar Management**: Create, get, list, and delete calendars
+- **Event Management**: Create, update, get, list, and delete events
+- **Scheduling**: Quickly add events with natural language, find free/busy information
+- **Timezone Handling**: Default support for Mumbai, India timezone (Asia/Kolkata)
+- **Authentication**: OAuth authentication with Google Calendar
+
+### Setting up Google API Credentials
+
+Before using the Google Calendar MCP Tool, you need to set up the necessary credentials:
+
+<div align="center">
+  
+#### 🔐 Creating your credentials.json file
+
+</div>
+
+1. **Create a Google Cloud Project**:
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/)
+   - Click "Select a project" at the top and then "New Project"
+   - Name your project (e.g., "MCP Calendar Tool") and click "Create"
+
+2. **Enable the Google Calendar API**:
+   - In your project dashboard, go to "APIs & Services" > "Library"
+   - Search for "Google Calendar API" and select it
+   - Click "Enable"
+
+3. **Configure OAuth Consent Screen**:
+   - Go to "APIs & Services" > "OAuth consent screen"
+   - Choose "External" user type (or "Internal" if you're in an organization)
+   - Fill in required fields (App name, User support email, Developer contact info)
+   - Add scopes for Calendar (https://www.googleapis.com/auth/calendar)
+   - Add your email as a test user
+   - Click "Save and Continue" through all steps
+
+4. **Create OAuth Credentials**:
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" and select "OAuth client ID"
+   - Select "Desktop application" as the application type
+   - Name your client (e.g., "Calendar MCP Client")
+   - Click "Create"
+
+5. **Download the Credentials**:
+   - A dialog will show your client ID and secret
+   - Click the download button (⬇️) to download your `credentials.json` file
+
+6. **Place the Credentials File**:
+   - Save the downloaded file as `credentials.json` in the `google_calender_mcp_tool` directory
+   - **IMPORTANT**: This file contains sensitive information - never commit it to version control
+   - Ensure it's listed in your `.gitignore` file
+
+<div align="center">
+  
+![Google Cloud Setup](https://img.shields.io/badge/Google_Cloud-Setup_Required-red)
+
+</div>
+
+The first time you run the Google Calendar MCP tool, it will use this credentials file to authenticate and generate a `token.json` file for future access.
+
+### Running the Google Calendar MCP Server
+
+Start the server to expose Google Calendar functionality through MCP:
+
+```bash
+python -m google_calender_mcp_tool.google_calendar_mcp_tool --host 127.0.0.1 --port 3007
+```
+
+Or with UV:
+
+```bash
+uv run google_calender_mcp_tool/google_calendar_mcp_tool.py --host 127.0.0.1 --port 3007
+```
+
+The server will check for the required credentials and listen for MCP requests on the specified host and port. It uses Asia/Kolkata (Mumbai, India) timezone by default.
+
+### Using the Agent Client
+
+In a separate terminal, run the agent client with your calendar management request:
+
+```bash
+python -m google_calender_mcp_tool.agent_client "YOUR REQUEST HERE"
+```
+
+Or with UV:
+
+```bash
+uv run google_calender_mcp_tool/agent_client.py "YOUR REQUEST HERE"
+```
+
+Examples:
+
+```bash
+# View calendars
+uv run google_calender_mcp_tool/agent_client.py "Show me my calendars"
+
+# Create a calendar
+uv run google_calender_mcp_tool/agent_client.py "Create a new calendar called 'Personal Events'"
+
+# Create events
+uv run google_calender_mcp_tool/agent_client.py "Schedule a meeting with the team tomorrow at 2pm"
+uv run google_calender_mcp_tool/agent_client.py "Add a dentist appointment on Friday at 10am"
+
+# Check availability
+uv run google_calender_mcp_tool/agent_client.py "When am I free next week?"
+uv run google_calender_mcp_tool/agent_client.py "Check if I'm busy next Friday afternoon"
+
+# Update events
+uv run google_calender_mcp_tool/agent_client.py "Change my 2pm meeting to 3pm"
+uv run google_calender_mcp_tool/agent_client.py "Update tomorrow's meeting location to Conference Room B"
+
+# Delete events
+uv run google_calender_mcp_tool/agent_client.py "Cancel my dentist appointment"
+```
+
+You can run the client in interactive mode:
+
+```bash
+uv run google_calender_mcp_tool/agent_client.py -i
+```
+
+Optional parameters:
+- `--model`: LLM model to use (default: "gpt-4o-mini")
+- `--timezone`: Timezone for calendar operations (default: "Asia/Kolkata" - Mumbai, India)
+
+Example with parameters:
+```bash
+uv run google_calender_mcp_tool/agent_client.py "Schedule a weekly team meeting" --model gpt-4
 ```
 
 ## 🎭 Playwright MCP Tool
